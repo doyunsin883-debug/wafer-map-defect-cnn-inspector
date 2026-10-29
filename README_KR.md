@@ -5,7 +5,7 @@
 
 ![웨이퍼 결함 분석 프로젝트 시각적 소개](assets/hero_wafer_inspector.png)
 
-[상세 국·영문 README](README.md) · [InFact 활동 배경](docs/INFACT_ACTIVITY.md) · [기술 설계](docs/TECHNICAL_DEEP_DIVE.md) · [원본 국문 12쪽 보고서](reports/Wafer_CNN_Project_Report_KR.pdf)
+[상세 국·영문 README](README.md) · [InFact 활동 배경](docs/INFACT_ACTIVITY.md) · [기술 설계](docs/TECHNICAL_DEEP_DIVE.md) · [국문 연구보고서](docs/PROJECT_REPORT_KR.md)
 
 ## 1. 이 프로젝트에서 해결하려던 문제
 
@@ -33,15 +33,15 @@
 
 ## 3. 인터페이스
 
-![실제 원본 HTML을 이용한 엣지링 샘플 UI 미리보기](assets/screenshots/actual_template_dataset_preview_edge_ring.png)
+![코드 구현을 바탕으로 만든 인터페이스 설명도](assets/diagrams/inspection_interface_schematic.svg)
 
-위 이미지는 실제 소스 데이터로 재구성한 브라우저 미리보기다. 원본 Flask 템플릿을 사용했지만 실시간 Flask 서버 연결 화면이 아니며, 학습 모델이 없어 **MODEL NOT TRAINED**라고 표시된다. 실제 정확도·Macro-F1은 최종 학습 기록이 확인되지 않아 게시하지 않았다.
+위 이미지는 인터페이스의 기능을 설명하는 **도식**이며, 실제 실행 화면을 촬영한 사진은 아니다. 별도로 보관된 원본 웹 캡처는 아직 GitHub에 업로드되지 않았다. 학습 모델이 없어 예측값을 임의로 표시하지 않는다. 실제 정확도·Macro-F1은 최종 학습 기록이 확인되지 않아 게시하지 않았다.
 
 ## 4. InFact 교내 학회 프로젝트
 
-| 학회 계정 화면 | 2026.10.30 중간발표 공지 |
-|:---:|:---:|
-| ![InFact 프로필](assets/screenshots/infact_official_profile_crop.jpg) | ![중간발표 일정](assets/screenshots/infact_midterm_notice_crop.jpg) |
+![사용자가 제공한 공지의 일정만 옮긴 설명용 도식](assets/diagrams/infact_announcement_transcript.svg)
+
+위 그림은 **제공된 공지의 일정과 장소를 옮긴 도식**이다. 원본 학회 캡처 사진인 것처럼 표시하지 않았으며, 원본은 별도 프로젝트 패키지에 보관되어 있다.
 
 **예정된 발표**: 2026년 10월 30일(금) 18:30, 비전타워 318호, 발표 10분 이내. 10월 29일 현재 발표 전이므로 참석 또는 완료·수상 사실을 기재하지 않는다. 이 자료는 학회 프로젝트의 **기술 산출물과 진행 맥락**을 기록하기 위한 것이다.
 
@@ -62,7 +62,7 @@ python app.py
 
 **산업공학적 의미**: 품질 데이터를 올바르게 검증하고, 결함의 분포를 분류하며, 관측값과 추정값을 구별하는 **검사·분석 의사결정 지원의 출발점**이다. 아직 실제 제조공정의 원인 규명, 성능 인증, 생산라인 수율 개선 효과를 입증한 단계는 아니다.
 
-- [원본 한국어 기술보고서](reports/Wafer_CNN_Project_Report_KR.pdf)
-- [원본 영어 기술보고서](reports/Wafer_CNN_Project_Report_EN.pdf)
+- [한국어 기술보고서 (Markdown)](docs/PROJECT_REPORT_KR.md)
+- [영어 기술 상세보고서](docs/TECHNICAL_DEEP_DIVE.md)
 - [코드 및 모델 기술 설명](docs/TECHNICAL_DEEP_DIVE.md)
 - [검증 / 미검증 항목](docs/VERIFICATION_STATUS.md)

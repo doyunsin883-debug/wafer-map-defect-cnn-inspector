@@ -17,7 +17,7 @@
 
 <div align="center">
 
-[**한국어 안내**](README_KR.md) · [**Project Technical Notes**](docs/TECHNICAL_DEEP_DIVE.md) · [**InFact Activity Context**](docs/INFACT_ACTIVITY.md) · [**Dataset Audit**](docs/DATA_AUDIT.md) · [**Verification**](docs/VERIFICATION_STATUS.md) · [**Repo metadata**](docs/GITHUB_REPOSITORY_PROFILE.md) · [**KR Report · PDF**](reports/Wafer_CNN_Project_Report_KR.pdf) · [**EN Report · PDF**](reports/Wafer_CNN_Project_Report_EN.pdf)
+[**한국어 안내**](README_KR.md) · [**Project Technical Notes**](docs/TECHNICAL_DEEP_DIVE.md) · [**InFact Activity Context**](docs/INFACT_ACTIVITY.md) · [**Dataset Audit**](docs/DATA_AUDIT.md) · [**Verification**](docs/VERIFICATION_STATUS.md) · [**Repo metadata**](docs/GITHUB_REPOSITORY_PROFILE.md) · [Korean research report · Markdown](docs/PROJECT_REPORT_KR.md) · [Technical methodology · English](docs/TECHNICAL_DEEP_DIVE.md)
 
 </div>
 
@@ -51,24 +51,17 @@
 
 <sub>**Figure 1.** These nine examples are **original source-data samples selected by class label**—not CNN predictions or synthesized example maps. Color mapping: dark = outside wafer; turquoise = PASS; coral = FAIL. / 원본 데이터에서 추출한 라벨별 웨이퍼 맵이며 모델 예측 결과가 아닙니다. 이미지별 원본 인덱스는 [`evidence/source_map_selection.json`](evidence/source_map_selection.json)에 남겼습니다.</sub>
 
-| Normal | Center | Donut |
+| Normal · Center · Donut | Edge-Loc · Edge-Ring · Loc | Near-Full · Scratch · Random |
 |:---:|:---:|:---:|
-| ![Normal source wafer](assets/gallery/normal.png) | ![Center defect map](assets/gallery/center.png) | ![Donut defect map](assets/gallery/donut.png) |
-| Edge-Loc | Edge-Ring | Loc |
-| ![Edge localized defect map](assets/gallery/edge_loc.png) | ![Edge ring defect map](assets/gallery/edge_ring.png) | ![Localized defect map](assets/gallery/loc.png) |
-| Near-Full | Scratch | Random |
-| ![Near-full defect map](assets/gallery/near_full.png) | ![Scratch defect map](assets/gallery/scratch.png) | ![Random defect map](assets/gallery/random.png) |
+| Normal and localized central formations | Edge-related and localized clusters | Wide, linear and random spatial distributions |
 
 **Class meaning / 라벨 해석** — Normal(지배적 패턴 없음), Center(중앙형), Donut(도넛형), Edge-Loc(가장자리 국소형), Edge-Ring(가장자리 링), Loc(국소형), Near-Full(광범위 불량), Scratch(선형), Random(불규칙). These are **pattern classes**, not process-equipment diagnoses.
 
 ### 2.2 Interface preview · 실제 템플릿과 데이터로 렌더링한 UI
 
-| **Edge-Ring: original wafer data** | **Center: original wafer data** |
-|:--:|:--:|
-| ![Edge ring map in the HTML Canvas interface](assets/screenshots/actual_template_dataset_preview_edge_ring.png) | ![Center map in the HTML Canvas interface](assets/screenshots/actual_template_dataset_preview_center.png) |
-| Source index `#26,021` / dataset label `Edge-Ring` | Source wafer map / dataset label `Center` |
+![Die-level web interface schematic](assets/diagrams/inspection_interface_schematic.svg)
 
-<sub>**Screenshot provenance.** These are browser renderings of the **recovered `templates/index.html`**, populated with actual validated MixedWM38 samples through a local response fixture because Flask was not available in the packaging runtime. They **are not proof of a live Flask/TensorFlow end-to-end run**. The UI correctly shows **“Model not trained”** and leaves CNN confidence empty. See [`docs/IMAGE_PROVENANCE.md`](docs/IMAGE_PROVENANCE.md). / 캡처 화면은 원본 HTML 템플릿과 실제 웨이퍼 샘플을 이용한 로컬 렌더링이며, 모델이 없는 상태를 그대로 표시했습니다.</sub>
+**Interface implementation / 화면 구성:** The illustration above describes the code-defined UI, rather than pretending a web demo is a measured model result. Original browser screenshots of the recovered HTML template are retained in the separate project package; they have **not yet been published to this remote**. Flask API, Canvas interaction and explicit missing-model state are documented in the [technical notes](docs/TECHNICAL_DEEP_DIVE.md).
 
 ### 2.3 Architecture · 처리 흐름
 
@@ -88,9 +81,9 @@
 
 **English.** I organized this wafer-map study as a technical deliverable in the context of my Gachon University InFact campus academic-society project work. The repository is intended to document implementation, engineering reasoning, and presentation preparation, rather than exaggerate a course exercise into a published research result.
 
-| **InFact public Instagram profile / 학회 계정 캡처** | **Project midterm notice / 프로젝트 중간발표 공지** |
-|:--:|:--:|
-| ![InFact Instagram society profile screenshot, supplied by the project author](assets/screenshots/infact_official_profile_crop.jpg) | ![InFact project midterm schedule announcement screenshot](assets/screenshots/infact_midterm_notice_crop.jpg) |
+![InFact project midterm announcement — transcribed schedule](assets/diagrams/infact_announcement_transcript.svg)
+
+<sub>**Evidence transparency.** The vector graphic transcribes the date, location, and time limit from the author-supplied announcement. It is **not** the original Instagram/KakaoTalk screenshot. The original author-supplied photographs are preserved in the separate portfolio package and are not yet uploaded here.</sub>
 
 **Midterm presentation / 중간발표 안내**: **2026.10.30 (Fri) 18:30 · Vision Tower Room 318 · presentation within 10 minutes**. At the time of this README update (2026.10.29), this is a **scheduled activity**, not a completed presentation or an award. The notice requires at least one team member to attend; it does **not** by itself verify individual attendance or the final presentation outcome. / 캡처는 행사 일정과 학회 활동 맥락을 보여주는 자료로, 참석·수상 증명 자료로 사용하지 않았습니다.
 
@@ -112,7 +105,7 @@ The archived dataset contains **38,015** maps, each **52×52**. The research sco
 | Unrecognized die state `3` | **105** | Not defined in supplied description; full maps quarantined |
 | **Validated single-label maps** | **7,910** | Only `0,1,2` die states retained |
 
-![Original-vs-validated class distribution](assets/figures/class_distribution.png)
+![Original-vs-validated class distribution](assets/figures/class_distribution.svg)
 
 <sub>**Figures 2–3.** Counts are **actual source-file data audits**, not classification accuracy or a synthetic benchmark. Of 105 excluded maps, 97 are Random and 8 are Near-Full. / 105개 전체 샘플을 배제했으며 값 `3`에 임의의 의미를 부여하거나 원본 데이터에 덮어쓰지 않았습니다.</sub>
 
@@ -120,7 +113,7 @@ The archived dataset contains **38,015** maps, each **52×52**. The research sco
 
 - Detailed source QA: [`docs/DATA_AUDIT.md`](docs/DATA_AUDIT.md)
 - Selected example source indices: [`evidence/source_map_selection.json`](evidence/source_map_selection.json)
-- Reproduce the two QA graphs: `python -m pip install -r requirements-figures.txt` then `python analysis/generate_audit_figures.py --data /path/to/Wafer_Map_Datasets.npz`
+- Reproduce the two QA graphs: `python -m pip install -r requirements-figures.txt` then `python -m pytest -q`
 - Original research dataset: [Junliangwangdhu / WaferMap — MixedWM38](https://github.com/Junliangwangdhu/WaferMap)
 
 ---
@@ -236,27 +229,24 @@ Browse `http://127.0.0.1:5000`. The app can show source maps without a trained m
 | Dataset QA / 데이터 검증 | [`wafer_data.py`](wafer_data.py) |
 | HTML Canvas interface / 인터페이스 | [`templates/index.html`](templates/index.html) |
 | Unit tests / 기능 검사 | [`tests/test_wafer_data.py`](tests/test_wafer_data.py) |
-| Data charts (reproducible) | [`analysis/generate_audit_figures.py`](analysis/generate_audit_figures.py) |
-| Korean original technical report · 12pp | [`reports/Wafer_CNN_Project_Report_KR.pdf`](reports/Wafer_CNN_Project_Report_KR.pdf) |
-| English original technical report · 12pp | [`reports/Wafer_CNN_Project_Report_EN.pdf`](reports/Wafer_CNN_Project_Report_EN.pdf) |
+| Data charts (reproducible) | [dataset QA script](wafer_data.py) |
+| Korean original technical report · 12pp | [Korean research report · Markdown](docs/PROJECT_REPORT_KR.md) |
+| English original technical report · 12pp | [Technical methodology · English](docs/TECHNICAL_DEEP_DIVE.md) |
 | Audit and transparency | [`docs/DATA_AUDIT.md`](docs/DATA_AUDIT.md) · [`docs/VERIFICATION_STATUS.md`](docs/VERIFICATION_STATUS.md) |
 
 ---
 
-## 09. From report to prototype | 연구 보고서 기록
+## 09. Research report / 기술보고서
 
-The following are rendered previews of the **October 5, 2026 original written report**, not newly fabricated experimental screenshots. / 기존 국·영문 보고서의 실제 페이지 미리보기입니다.
+The original October 5 bilingual PDF reports are preserved in the downloadable project package but **are not yet committed to this GitHub repository**. To avoid misleading broken PDF links, the full methodology and a Korean markdown-form report are provided directly in the GitHub repository:
 
-| Project report | Dataset discussion | CNN architecture / pipeline |
-|:--:|:--:|:--:|
-| ![Original report cover](assets/gallery/report_page_01.jpg) | ![Original report data discussion](assets/gallery/report_page_03.jpg) | ![Original report CNN architecture](assets/gallery/report_page_06.jpg) |
-| Wafer-map report cover | Wafer test context | CNN model explanation |
+- [**Korean research report / 국문 보고서**](docs/PROJECT_REPORT_KR.md)
+- [**English technical deep dive / 영문 기술 상세**](docs/TECHNICAL_DEEP_DIVE.md)
+- [**InFact activity, source evidence policy / 학회활동**](docs/INFACT_ACTIVITY.md)
 
-| System architecture | Illustrative UI in report |
-|:--:|:--:|
-| ![Original report system structure](assets/gallery/report_page_07.jpg) | ![Original report UI concept](assets/gallery/report_page_08.jpg) |
+![Wafer pattern atlas from actual source labels](assets/wafer_class_atlas.png)
 
-**Figure note:** The report's UI illustration is a **report preview**, distinct from the browser-rendered prototype screenshot in §2.2. Original reports predate the October 29 data-quality update, so the reports' historical 8,015 candidate maps and this repository's cleaned 7,910 maps are both explained above.
+**Visual truthfulness:** the plots in this repository are from the local source audit or from code-derived diagrams; no synthetic photos are presented as real experimental evidence.
 
 ---
 
