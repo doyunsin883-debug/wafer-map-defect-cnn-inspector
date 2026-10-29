@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wafer CNN Inspector | Semiconductor Quality</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,Arial,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#071321;color:#e8f4fa}
+main{max-width:1350px;margin:0 auto;padding:26px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap}
+h1{font-size:32px;margin:0}.subtitle{color:#8db8c6;margin-top:10px}
+.pill{background:#12343a;color:#8de7d2;border:1px solid #245d5d;border-radius:24px;padding:10px 15px}
+.dashboard{display:grid;grid-template-columns:minmax(320px,1fr) minmax(320px,.9fr);gap:20px}
+@media(max-width:780px){.dashboard{grid-template-columns:1fr}}
+.panel{border:1px solid #2e4a5c;border-radius:18px;background:#102234;padding:20px;min-width:0}
+.panel h2{font-size:20px;margin:0 0 20px}
+canvas{display:block;margin:0 auto;max-width:100%;aspect-ratio:1;background:#0b1725;border-radius:12px}
+.controls{display:flex;gap:10px;margin:20px 0;flex-wrap:wrap;align-items:center}
+button,input{background:#173d46;color:white;border:1px solid #3b6a77;border-radius:9px;padding:10px;font-size:15px}
+button{cursor:pointer}input{width:140px}button:hover{background:#23606a}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:15px 0}
+.stat{border:1px solid #26475a;padding:14px;border-radius:12px;background:#0d2030}
+.stat span{display:block;color:#82a8b7;font-size:12px}.stat strong{font-size:22px}
+.ok{color:#64d2ad}.warn{color:#f4b183}.muted{color:#8ba6b3}
+.row{display:flex;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid #273a49}
+.label{color:#a4c1cb}.value{font-weight:700}
+footer{color:#88a7b5;margin-top:23px;font-size:13px;line-height:1.7}
+</style></head><body><main>
+<header><div><div class="pill" style="display:inline-block;margin-bottom:10px">GACHON UNIVERSITY / INFACT · CAMPUS PROJECT</div>
+<h1>WAFER MAP <span style="color:#62d4bf">DEFECT INSPECTOR</span></h1>
+<div class="subtitle">52×52 Die-level inspection · CNN spatial pattern classification · PASS / FAIL analysis</div></div>
+<div class="pill" id="status">SOURCE DATA · Checking...</div></header>
+<div class="dashboard"><section class="panel"><h2>01 / Wafer Map — Original Data</h2>
+<canvas id="map" width="600" height="600" aria-label="Wafer map"></canvas>
+<div class="controls"><button id="prev">← Previous</button><input type="number" id="pos" min="0" value="0"><button id="next">Next →</button><button id="random">Random map</button></div>
+<div id="hover" class="muted">Hover over a die to inspect its coordinates and state.</div>
+<div class="stats"><div class="stat"><span>PASS DIES</span><strong id="pass">—</strong></div><div class="stat"><span>FAIL DIES</span><strong id="fail">—</strong></div><div class="stat"><span>OBSERVED FAIL RATIO</span><strong id="ratio">—</strong></div></div>
+</section><section class="panel"><h2>02 / CNN Quality Screening</h2>
+<div class="row"><span class="label">Original class label</span><span id="truth" class="value">—</span></div>
+<div class="row"><span class="label">Model status</span><span id="model" class="value warn">—</span></div>
+<div class="row"><span class="label">CNN prediction</span><span id="pred" class="value">—</span></div>
+<div class="row"><span class="label">Model confidence</span><span id="confidence" class="value">Not available</span></div>
+<h3>Top-5 predictions (only with trained weights)</h3><div id="top5" class="muted">No validated inference available.</div>
+<div class="stat" style="margin-top:30px"><span>ORIGINAL DATA INDEX</span><strong id="dataset_idx">—</strong></div>
+<p class="muted">Cell values: 0 = outside wafer · 1 = PASS · 2 = FAIL. Observed failure ratio is not a future-yield forecast or root-cause diagnosis.</p>
+</section></div>
+<footer>Independent academic study. This browser is a local Flask interface, not a factory data connection. No training accuracy is claimed unless a measured evaluation file exists.</footer></main>
+<script>
+let record=null, gridSize=600/52;
+const $=id=>document.getElementById(id), map=$("map"),ctx=map.getContext("2d");
+const colors={"0":"#071624","1":"#31bdaa","2":"#ef7077"};
+function render(x){
+ record=x; $("pos").value=x.position;$("pos").max=x.usable_samples-1;
+ $("pass").textContent=x.pass_count;$("fail").textContent=x.fail_count;
+ $("ratio").textContent=(100*x.fail_ratio).toFixed(2)+"%";
+ $("truth").textContent=x.ground_truth;$("dataset_idx").textContent="#"+x.dataset_index;
+ $("status").textContent=x.model_ready?"CNN READY":"DATA READY · CNN UNTRAINED";
+ $("model").textContent=x.model_ready?"WEIGHTS LOADED":"MODEL NOT TRAINED";
+ $("pred").textContent=x.prediction || "Not available";
+ $("confidence").textContent=x.confidence==null?"Not available":(100*x.confidence).toFixed(1)+"%";
+ $("top5").innerHTML=x.top5.length?x.top5.map(p=>"<div class='row'><span>"+p.name+"</span><b>"+(100*p.probability).toFixed(2)+"%</b></div>").join(""):"No prediction is generated without trained weights.";
+ for(let row=0;row<52;row++)for(let col=0;col<52;col++){
+  ctx.fillStyle=colors[x.wafer[row][col]]||"#ffbd45";
+  ctx.fillRect(col*gridSize,row*gridSize,gridSize*.93,gridSize*.93);
+ }
+}
+async function load(pos){
+ try{const response=await fetch("/api/sample?pos="+encodeURIComponent(pos));
+ if(!response.ok)throw new Error("HTTP "+response.status);
+ render(await response.json());}catch(error){$("status").textContent="SOURCE DATA NOT FOUND";$("hover").textContent=String(error)+" — install data first.";}
+}
+$("prev").onclick=()=>load(Math.max(0,Number($("pos").value)-1));
+$("next").onclick=()=>load(Number($("pos").value)+1);
+$("pos").onchange=()=>load(Number($("pos").value));
+$("random").onclick=async()=>{try{const r=await fetch("/api/random");render(await r.json());}catch(e){$("hover").textContent=String(e);}};
+map.onmousemove=e=>{if(!record)return;const rect=map.getBoundingClientRect();
+ const col=Math.floor((e.clientX-rect.left)*52/rect.width),row=Math.floor((e.clientY-rect.top)*52/rect.height);
+ if(row>=0&&row<52&&col>=0&&col<52){const state=record.wafer[row][col];$("hover").textContent="Row "+row+" | Column "+col+" | "+({0:"Outside",1:"PASS",2:"FAIL"}[state]||"Unknown");}};
+load(0);
+</script></body></html>
