@@ -1,0 +1,59 @@
+{
+  "note": "Selected labeled source samples; not CNN predictions",
+  "samples": {
+    "Normal": {
+      "position": 5774,
+      "dataset_index": 33871
+    },
+    "Center": {
+      "position": 12,
+      "dataset_index": 12012
+    },
+    "Donut": {
+      "position": 1036,
+      "dataset_index": 24036
+    },
+    "Edge-Loc": {
+      "position": 2020,
+      "dataset_index": 25020
+    },
+    "Edge-Ring": {
+      "position": 3013,
+      "dataset_index": 26013
+    },
+    "Loc": {
+      "position": 4018,
+      "dataset_index": 32018
+    },
+    "Near-Full": {
+      "position": 6772,
+      "dataset_index": 34870
+    },
+    "Scratch": {
+      "position": 6938,
+      "dataset_index": 37043
+    },
+    "Random": {
+      "position": 5018,
+      "dataset_index": 33022
+    }
+  },
+  "audit": {
+    "raw_maps": 38015,
+    "historical_normal_plus_single": 8015,
+    "excluded_mixed_defect": 30000,
+    "excluded_undocumented_die_value": 105,
+    "cleaned_usable": 7910,
+    "class_counts": {
+      "Normal": 1000,
+      "Center": 1000,
+      "Donut": 1000,
+      "Edge-Loc": 1000,
+      "Edge-Ring": 1000,
+      "Loc": 1000,
+      "Near-Full": 141,
+      "Scratch": 1000,
+      "Random": 769
+    }
+  }
+}
