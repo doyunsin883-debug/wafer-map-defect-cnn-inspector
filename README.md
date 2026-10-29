@@ -51,17 +51,25 @@
 
 <sub>**Figure 1.** These nine examples are **original source-data samples selected by class label**—not CNN predictions or synthesized example maps. Color mapping: dark = outside wafer; turquoise = PASS; coral = FAIL. / 원본 데이터에서 추출한 라벨별 웨이퍼 맵이며 모델 예측 결과가 아닙니다. 이미지별 원본 인덱스는 [`evidence/source_map_selection.json`](evidence/source_map_selection.json)에 남겼습니다.</sub>
 
-| Normal · Center · Donut | Edge-Loc · Edge-Ring · Loc | Near-Full · Scratch · Random |
-|:---:|:---:|:---:|
-| Normal and localized central formations | Edge-related and localized clusters | Wide, linear and random spatial distributions |
+| Normal | Center | Donut |
+|:--:|:--:|:--:|
+| ![Normal wafer from source dataset](assets/gallery/normal.png) | ![Center defect source wafer](assets/gallery/center.png) | ![Donut defect source wafer](assets/gallery/donut.png) |
+| Edge-Loc | Edge-Ring | Loc |
+| ![Edge-Loc wafer](assets/gallery/edge_loc.png) | ![Edge-Ring wafer](assets/gallery/edge_ring.png) | ![Loc wafer](assets/gallery/loc.png) |
+| Near-Full | Scratch | Random |
+| ![Near-Full wafer](assets/gallery/near_full.png) | ![Scratch wafer](assets/gallery/scratch.png) | ![Random wafer](assets/gallery/random.png) |
+
+<sub>All nine thumbnails are visualizations of genuine MixedWM38 input samples, **not trained CNN predictions**. / 원본 MixedWM38 샘플의 시각화이며 모델 추론 결과가 아닙니다.</sub>
 
 **Class meaning / 라벨 해석** — Normal(지배적 패턴 없음), Center(중앙형), Donut(도넛형), Edge-Loc(가장자리 국소형), Edge-Ring(가장자리 링), Loc(국소형), Near-Full(광범위 불량), Scratch(선형), Random(불규칙). These are **pattern classes**, not process-equipment diagnoses.
 
 ### 2.2 Interface preview · 실제 템플릿과 데이터로 렌더링한 UI
 
-![Die-level web interface schematic](assets/diagrams/inspection_interface_schematic.svg)
+| **Edge-Ring: rendered interface** | **Center: rendered interface** |
+|:--:|:--:|
+| ![Browser-rendered HTML Canvas showing Edge-Ring wafer](assets/screenshots/actual_template_dataset_preview_edge_ring.png) | ![Browser-rendered HTML Canvas showing Center wafer](assets/screenshots/actual_template_dataset_preview_center.png) |
 
-**Interface implementation / 화면 구성:** The illustration above describes the code-defined UI, rather than pretending a web demo is a measured model result. Original browser screenshots of the recovered HTML template are retained in the separate project package; they have **not yet been published to this remote**. Flask API, Canvas interaction and explicit missing-model state are documented in the [technical notes](docs/TECHNICAL_DEEP_DIVE.md).
+<sub>**Evidence provenance.** Both screenshots render the recovered HTML Canvas template with genuine validated wafer-map samples through a local response fixture. They do **not** imply that a trained TensorFlow model is present or that a live Flask inference server was tested. “Model not trained” is intentional; see [image provenance](docs/IMAGE_PROVENANCE.md). / 실제 데이터와 원본 HTML 템플릿을 이용해 브라우저에서 캡처한 화면이며, CNN 추론 결과로 오인하지 않도록 모델 미학습 상태를 명시했습니다.</sub>
 
 ### 2.3 Architecture · 처리 흐름
 
@@ -81,9 +89,11 @@
 
 **English.** I organized this wafer-map study as a technical deliverable in the context of my Gachon University InFact campus academic-society project work. The repository is intended to document implementation, engineering reasoning, and presentation preparation, rather than exaggerate a course exercise into a published research result.
 
-![InFact project midterm announcement — transcribed schedule](assets/diagrams/infact_announcement_transcript.svg)
+| **InFact academic-society account** | **Midterm project presentation notice** |
+|:--:|:--:|
+| ![Gachon InFact official account screenshot supplied for project portfolio](assets/screenshots/infact_official_profile_crop.jpg) | ![Author-supplied project midterm presentation KakaoTalk notice screenshot](assets/screenshots/infact_midterm_notice_crop.jpg) |
 
-<sub>**Evidence transparency.** The vector graphic transcribes the date, location, and time limit from the author-supplied announcement. It is **not** the original Instagram/KakaoTalk screenshot. The original author-supplied photographs are preserved in the separate portfolio package and are not yet uploaded here.</sub>
+<sub>**Original supplied screenshots** documenting the campus academic-society context and announced meeting. These are not evidence that a presentation has already been delivered or that a prize was awarded. / 학회 활동과 중간발표 공지 확인용 원본 캡처이며 발표 완료·수상 실적의 증빙으로 사용하지 않았습니다.</sub>
 
 **Midterm presentation / 중간발표 안내**: **2026.10.30 (Fri) 18:30 · Vision Tower Room 318 · presentation within 10 minutes**. At the time of this README update (2026.10.29), this is a **scheduled activity**, not a completed presentation or an award. The notice requires at least one team member to attend; it does **not** by itself verify individual attendance or the final presentation outcome. / 캡처는 행사 일정과 학회 활동 맥락을 보여주는 자료로, 참석·수상 증명 자료로 사용하지 않았습니다.
 
@@ -105,7 +115,7 @@ The archived dataset contains **38,015** maps, each **52×52**. The research sco
 | Unrecognized die state `3` | **105** | Not defined in supplied description; full maps quarantined |
 | **Validated single-label maps** | **7,910** | Only `0,1,2` die states retained |
 
-![Original-vs-validated class distribution](assets/figures/class_distribution.svg)
+![Original-vs-validated class distribution](assets/figures/class_distribution.png)
 
 <sub>**Figures 2–3.** Counts are **actual source-file data audits**, not classification accuracy or a synthetic benchmark. Of 105 excluded maps, 97 are Random and 8 are Near-Full. / 105개 전체 샘플을 배제했으며 값 `3`에 임의의 의미를 부여하거나 원본 데이터에 덮어쓰지 않았습니다.</sub>
 
@@ -244,7 +254,13 @@ The original October 5 bilingual PDF reports are preserved in the downloadable p
 - [**English technical deep dive / 영문 기술 상세**](docs/TECHNICAL_DEEP_DIVE.md)
 - [**InFact activity, source evidence policy / 학회활동**](docs/INFACT_ACTIVITY.md)
 
-![Wafer pattern atlas from actual source labels](assets/wafer_class_atlas.png)
+| Report cover | Dataset & wafer inspection | CNN architecture |
+|:--:|:--:|:--:|
+| ![Original Korean wafer CNN report cover](assets/gallery/report_page_01.jpg) | ![Original report dataset section](assets/gallery/report_page_03.jpg) | ![Original report CNN architecture](assets/gallery/report_page_06.jpg) |
+| Architecture / workflow | Interface explanation | Source graph context |
+| ![Original report architecture page](assets/gallery/report_page_07.jpg) | ![Original report interface section](assets/gallery/report_page_08.jpg) | ![Wafer pattern atlas](assets/wafer_pattern_examples.png) |
+
+<sub>These are actual previews of the October 5, 2026 authored technical report and programmatically rendered source data. They are **not** fabricated CNN accuracy or screenshots of a deployed production tool. / 원본 보고서의 페이지 미리보기와 데이터 기반 웨이퍼 시각화입니다.</sub>
 
 **Visual truthfulness:** the plots in this repository are from the local source audit or from code-derived diagrams; no synthetic photos are presented as real experimental evidence.
 

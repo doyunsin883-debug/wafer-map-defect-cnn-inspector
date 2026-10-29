@@ -33,15 +33,19 @@
 
 ## 3. 인터페이스
 
-![코드 구현을 바탕으로 만든 인터페이스 설명도](assets/diagrams/inspection_interface_schematic.svg)
+| Edge-Ring 원본 데이터 | Center 원본 데이터 |
+|:--:|:--:|
+| ![HTML Canvas Edge Ring 실제 렌더링 캡처](assets/screenshots/actual_template_dataset_preview_edge_ring.png) | ![HTML Canvas Center 실제 렌더링 캡처](assets/screenshots/actual_template_dataset_preview_center.png) |
 
-위 이미지는 인터페이스의 기능을 설명하는 **도식**이며, 실제 실행 화면을 촬영한 사진은 아니다. 별도로 보관된 원본 웹 캡처는 아직 GitHub에 업로드되지 않았다. 학습 모델이 없어 예측값을 임의로 표시하지 않는다. 실제 정확도·Macro-F1은 최종 학습 기록이 확인되지 않아 게시하지 않았다.
+위 사진은 **기존 HTML Canvas 템플릿에 실제 데이터셋의 웨이퍼 샘플을 연결해 브라우저에서 렌더링한 화면**입니다. Flask/TensorFlow의 실시간 추론 결과는 아니며, 모델이 없을 때 미학습 상태를 그대로 표시합니다. Accuracy·Macro-F1은 최종 학습 기록이 확인되지 않아 게시하지 않습니다.
 
 ## 4. InFact 교내 학회 프로젝트
 
-![사용자가 제공한 공지의 일정만 옮긴 설명용 도식](assets/diagrams/infact_announcement_transcript.svg)
+| 학회 Instagram 계정 캡처 | 프로젝트 중간발표 공지 캡처 |
+|:--:|:--:|
+| ![InFact 학회 공식 프로필 캡처](assets/screenshots/infact_official_profile_crop.jpg) | ![InFact 중간발표 원본 공지 캡처](assets/screenshots/infact_midterm_notice_crop.jpg) |
 
-위 그림은 **제공된 공지의 일정과 장소를 옮긴 도식**이다. 원본 학회 캡처 사진인 것처럼 표시하지 않았으며, 원본은 별도 프로젝트 패키지에 보관되어 있다.
+활동 안내의 맥락을 설명하는 **원본 제공 캡처**입니다. 학회 소속, 발표 예정 일정의 자료이며 참석·수상 증빙으로 해석하지 않습니다.
 
 **예정된 발표**: 2026년 10월 30일(금) 18:30, 비전타워 318호, 발표 10분 이내. 10월 29일 현재 발표 전이므로 참석 또는 완료·수상 사실을 기재하지 않는다. 이 자료는 학회 프로젝트의 **기술 산출물과 진행 맥락**을 기록하기 위한 것이다.
 
@@ -66,3 +70,19 @@ python app.py
 - [영어 기술 상세보고서](docs/TECHNICAL_DEEP_DIVE.md)
 - [코드 및 모델 기술 설명](docs/TECHNICAL_DEEP_DIVE.md)
 - [검증 / 미검증 항목](docs/VERIFICATION_STATUS.md)
+
+## 6. 원본 데이터와 연구보고서 이미지
+
+| Normal | Center | Donut |
+|:--:|:--:|:--:|
+| ![Normal](assets/gallery/normal.png) | ![Center](assets/gallery/center.png) | ![Donut](assets/gallery/donut.png) |
+| Edge-Loc | Edge-Ring | Loc |
+| ![Edge-Loc](assets/gallery/edge_loc.png) | ![Edge-Ring](assets/gallery/edge_ring.png) | ![Loc](assets/gallery/loc.png) |
+| Near-Full | Scratch | Random |
+| ![Near-Full](assets/gallery/near_full.png) | ![Scratch](assets/gallery/scratch.png) | ![Random](assets/gallery/random.png) |
+
+| 원본 보고서 표지 | 데이터 분석 | CNN 기술 설명 |
+|:--:|:--:|:--:|
+| ![표지](assets/gallery/report_page_01.jpg) | ![데이터 페이지](assets/gallery/report_page_03.jpg) | ![CNN 페이지](assets/gallery/report_page_06.jpg) |
+
+모든 웨이퍼 사진은 원본 데이터 기반 시각화이며 CNN 예측 정확도나 실제 공정 수율 개선 실적을 나타내지 않습니다.
